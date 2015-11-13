@@ -1,0 +1,9 @@
+bin/
+.project
+.classpath
+.settings
+.DS_Store
+*.bak
+*.org
+pom-step1.xml
+

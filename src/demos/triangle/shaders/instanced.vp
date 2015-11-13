@@ -1,0 +1,21 @@
+#version 330 
+//uniform mat4 MVP[2]; 
+uniform mat4 MVP; 
+uniform mat4 InstanceTransform[2];
+
+in vec4 VertexPosition; 
+in vec4 VertexColor; 
+out vec4    tmpColor; 
+
+void main() {
+//  gl_Position = MVP[0] * InstanceTransform[gl_InstanceID] * VertexPosition; 
+  gl_Position = MVP * InstanceTransform[gl_InstanceID] * VertexPosition; 
+  tmpColor = VertexColor; 
+}
+
+//InstancePosition(vec3), InstanceRotate(float)をインスタンス毎に与えたいが、
+//そのためにはGLSL内でglTranslate(),glRotate()相当の演算を行う必要がある。
+//こんな演算は用意されていないので、CPU側で行列を計算してGPUに転送する。
+//http://gamedev.stackexchange.com/questions/74129/glsl-can-i-use-matrix-transformation-functions-in-vertex-shader
+
+//[2] GLUniformDataを使ってmat4の配列にデータを転送できない。
